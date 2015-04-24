@@ -1,0 +1,74 @@
+#!/bin/sh -ex
+
+DB_NAME=espocrm
+DB_USER=espocrm
+DB_PASS=$(mcookie)
+
+ADMIN_NAME=admin
+ADMIN_PASS=turnkey
+DOMAIN=127.0.0.1
+
+SRC=/usr/local/src
+WEBROOT=/var/www/espocrm
+
+# unpack and set required permissions
+
+unzip $SRC/EspoCRM-*.zip -d $SRC
+rm $SRC/EspoCRM-*.zip
+mv $SRC/EspoCRM-* $WEBROOT
+chown -R www-data:www-data $WEBROOT
+
+
+# php.ini
+CONF=/etc/php5/apache2/php.ini
+sed -i "s|^memory_limit.*|memory_limit = 256M|" $CONF
+sed -i "s|^upload_max_filesize.*|upload_max_filesize = 50M|" $CONF
+sed -i "s|^post_max_size.*|post_max_size = 50M|" $CONF
+sed -i "s|^max_input_time.*|max_input_time = 180|" $CONF
+sed -i "s|^max_execution_time.*|max_execution_time = 180|" $CONF
+
+# configure apache
+a2dissite default
+a2ensite espocrm
+a2enmod rewrite
+
+# start services
+/etc/init.d/mysql start
+/etc/init.d/apache2 start
+
+ 
+MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
+
+$MYSQL_BATCH --execute "CREATE USER 'espocrm'@'localhost' IDENTIFIED BY '$DB_PASS';"
+$MYSQL_BATCH --execute "GRANT ALL PRIVILEGES ON * . * TO 'espocrm'@'localhost';"
+
+
+# curl
+URL="http://127.0.0.1/install/"
+CURL="curl --request POST -c /tmp/cookie -b /tmp/cookie"
+
+$CURL $URL --data "user-lang=en_US&action=step1"
+$CURL $URL --data "license-agree=1&action=step2"
+$CURL $URL --data "hostName=localhost&dbName=$DB_NAME&dbUserName=$DB_USER&dbUserPass=$DB_PASS&action=settingsTest"
+$CURL $URL --data "host-name=localhost&db-name=$DB_NAME&db-user-name=$DB_USER&db-user-password=$DB_PASS&action=setupConfirmation"
+$CURL $URL --data "action=checkPermission"
+$CURL $URL --data "action=applySett"
+$CURL $URL --data "action=buildDatabse"
+$CURL $URL --data "action=step3"
+$CURL $URL --data "user-name=$ADMIN_NAME&user-pass=$ADMIN_PASS&user-confirm-pass=$ADMIN_PASS&action=step4"
+$CURL $URL --data "action=createUser"
+$CURL $URL --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&weekStart=0&defaultCurrency=USD&thousandSeparator
+=%2C&decimalMark=.&language=en_US&action=step5"
+$CURL $URL --data "outboundEmailFromName=&outboundEmailFromAddress=&smtpServer=&smtpPort=25&smtpSecurity=&smtpUsername=
+&smtpPassword=&action=finish"
+
+rm -f /tmp/cookie
+
+# stop services
+/etc/init.d/apache2 stop
+/etc/init.d/mysql stop
+
+
+# setup cron
+CRON_TAB=/var/spool/cron/crontabs/root
+echo '* * * * * php -f /var/www/espocrm/cron.php > /dev/null 2>&1' >> $CRON_TAB

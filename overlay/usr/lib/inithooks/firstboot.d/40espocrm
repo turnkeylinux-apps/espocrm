@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# set espocrm admin password and domain to serve
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/espocrm.py --domain="$APP_DOMAIN"
+
