@@ -1,0 +1,8 @@
+turnkey-espocrm-14.0 (1) turnkey; urgency=low
+
+  * Initial public release of TurnKey EspoCRM.
+
+  * Note: Please refer to turnkey-lamp's changelog for changes common to this
+    and other lamp based appliances.
+
+ -- OnGle <nafets.sivad@gmail.com>  Tue, 12 May 2015 01:36:15 +0000
