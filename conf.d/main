@@ -28,7 +28,7 @@ sed -i "s|^max_input_time.*|max_input_time = 180|" $CONF
 sed -i "s|^max_execution_time.*|max_execution_time = 180|" $CONF
 
 # configure apache
-a2dissite default
+a2dissite 000-default
 a2ensite espocrm
 a2enmod rewrite
 
