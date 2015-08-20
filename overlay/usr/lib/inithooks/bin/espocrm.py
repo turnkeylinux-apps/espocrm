@@ -9,6 +9,7 @@ Option:
 
 import sys
 import getopt
+import inithooks_cache
 import hashlib
 import crypt
 import re
@@ -54,6 +55,8 @@ def main():
 
     if domain == "DEFAULT":
         domain = DEFAULT_DOMAIN
+
+    inithooks_cache.write('APP_DOMAIN', domain)
 
     if not password:
         if 'd' not in locals():
