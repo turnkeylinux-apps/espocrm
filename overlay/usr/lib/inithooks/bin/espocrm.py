@@ -4,6 +4,7 @@
 Option:
     --domain=   unless provided, will ask interactively
                 DEFAULT=127.0.0.1
+    --pass=     unless provided, will ask interactively
 
 """
 
