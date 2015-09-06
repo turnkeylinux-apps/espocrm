@@ -6,7 +6,6 @@ DB_PASS=$(mcookie)
 
 ADMIN_NAME=admin
 ADMIN_PASS=turnkey
-DOMAIN=127.0.0.1
 
 SRC=/usr/local/src
 WEBROOT=/var/www/espocrm
