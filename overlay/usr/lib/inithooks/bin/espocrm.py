@@ -1,16 +1,13 @@
 #!/usr/bin/python
-"""Set EspoCRM url
+"""Set EspoCRM admin password
 
 Option:
-    --domain=   unless provided, will ask interactively
-                DEFAULT=127.0.0.1
     --pass=     unless provided, will ask interactively
 
 """
 
 import sys
 import getopt
-import inithooks_cache
 import hashlib
 import crypt
 import re
@@ -26,38 +23,19 @@ def usage(s=None):
     print >> sys.stderr, __doc__
     sys.exit(1)
 
-DEFAULT_DOMAIN="127.0.0.1"
-
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'domain='])
+                                       ['help', 'pass='])
     except getopt.GetoptError, e:
         usage(e)
 
     password = ""
-    domain = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
         elif  opt == '--pass':
             password = val
-        elif opt == '--domain':
-            domain = val
-
-    if not domain:
-        if 'd' not in locals():
-            d = Dialog('TurnKey Linux - First boot configuration')
-
-        domain = d.get_input(
-            "EspoCRM URL",
-            "Example: www.mydomain.com or mydomain.com",
-            DEFAULT_DOMAIN)
-
-    if domain == "DEFAULT":
-        domain = DEFAULT_DOMAIN
-
-    inithooks_cache.write('APP_DOMAIN', domain)
 
     if not password:
         if 'd' not in locals():
@@ -68,7 +46,6 @@ def main():
             "Enter new password for the EspoCRM 'admin' account.")
 
     conf = "/var/www/espocrm/data/config.php"
-    system("sed -i \"s|siteUrl.*|siteUrl' => 'http://%s',|\" %s" % (domain, conf))
 
     for line in open(conf):
         match = re.search("'passwordSalt' => '([^']*)',", line)
