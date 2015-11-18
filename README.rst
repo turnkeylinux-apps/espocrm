@@ -1,7 +1,11 @@
-EspoCRM - web based, open source CRM
-===========================================
+EspoCRM - lightweight customer relationship manager
+===================================================
 
-`EspoCRM`_ is an open source CRM application that allows you to see, enter and evaluate all your company relationships regardless of the type. People, companies, projects or opportunities — all in an easy and intuitive interface.
+`EspoCRM`_ is a mobile-friendly open source CRM application that allows
+you to see, enter and evaluate all your company relationships regardless
+of the type. It integrates with your calendar, email and social media to
+track leads, opportunities and accounts. People, companies, projects -
+all in an easy and intuitive interface.
 
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
