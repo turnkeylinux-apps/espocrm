@@ -1,12 +1,12 @@
 turnkey-espocrm-14.2 (1) turnkey; urgency=low
 
-  * Updated EspoCRM to 4.7.0
+  * Updated EspoCRM to 4.7.1
 
   * Updated Adminer to 4.2.5
 
   * Installed security updates.
 
- -- Stefan Davis <stefan@turnkeylinux.org>  Thu, 25 May 2017 09:40:10 +1000
+ -- Stefan Davis <stefan@turnkeylinux.org>  Thu, 08 Jun 2017 09:40:10 +1000
 
 turnkey-espocrm-14.1 (1) turnkey; urgency=low
 
