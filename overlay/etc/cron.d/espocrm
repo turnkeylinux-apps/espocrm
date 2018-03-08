@@ -1,0 +1,1 @@
+* * * * * www-data cd /var/www/espocrm; /usr/bin/php -f cron.php > /dev/null 2>&1
