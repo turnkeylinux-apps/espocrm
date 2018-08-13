@@ -14,6 +14,10 @@ and on top of that:
    
     - Installed from upstream source code to /var/www/espocrm
 
+      **Security note**: Updates to EspoCRM may require supervision so
+      they **ARE NOT** configured to install automatically. See `EspoCRM
+      documentation`_ for upgrading.
+
 - SSL support out of the box.
 - `Adminer`_ administration frontend for MySQL (listening on port
   12322 - uses SSL).
@@ -29,7 +33,8 @@ Credentials *(passwords set at first boot)*
 -  EspoCRM: username **admin**
 
 
-.. _EspoCRM: http://www.espocrm.com/
+.. _EspoCRM: https://www.espocrm.com/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _Adminer: http://www.adminer.org
+.. _EspoCRM documentation: https://www.espocrm.com/documentation/administration/upgrading/
+.. _Adminer: https://www.adminer.org
 
