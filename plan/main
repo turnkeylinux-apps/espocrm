@@ -6,6 +6,7 @@ php-cli
 php-curl
 php-imap
 php-mcrypt
+php-mbstring
 
 unzip
 uuid-runtime
