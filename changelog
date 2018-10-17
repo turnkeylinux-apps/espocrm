@@ -1,6 +1,6 @@
 turnkey-espocrm-15.1 (1) turnkey; urgency=low
 
-  * Added missing dependency "php-mbstring"
+  * Added missing dependency "php-mbstring" - closes #1186.
 
  -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 16 Oct 2018 01:25:37 +1000
 
