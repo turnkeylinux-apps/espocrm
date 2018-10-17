@@ -1,14 +1,16 @@
 turnkey-espocrm-15.1 (1) turnkey; urgency=low
 
+  * Updated EspoCRM to v5.4.4.
+
   * Added missing dependency "php-mbstring" - closes #1186.
 
  -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 16 Oct 2018 01:25:37 +1000
 
 turnkey-espocrm-15.0 (1) turnkey; urgency=low
 
-  * Updated EspoCRM to 4.8.4
+  * Updated EspoCRM to v5.2.5.
 
-  * Add default cron job as noted in EspoCRM docs (closes #996)
+  * Add default cron job as noted in EspoCRM docs - closes #996.
 
   * Install Adminer directly from stretch/main repo
 
