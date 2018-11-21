@@ -1,6 +1,15 @@
-turnkey-espocrm-15.1 (1) turnkey; urgency=low
+turnkey-espocrm-15.2 (1) turnkey; urgency=low
 
   * Updated EspoCRM to v5.4.5.
+
+  * Rebuild to resolve inadvertant removal of mariadb during sec-updates
+    - part of #1246.
+
+ -- Stefan Davis <stefan@turnkeylinux.org>  Wed, 21 Nov 2018 17:32:47 +1100
+
+turnkey-espocrm-15.1 (1) turnkey; urgency=low
+
+  * Updated EspoCRM to v5.4.4.
 
   * Added missing dependency "php-mbstring" - closes #1186.
 
