@@ -1,6 +1,6 @@
 turnkey-espocrm-15.1 (1) turnkey; urgency=low
 
-  * Updated EspoCRM to v5.4.4.
+  * Updated EspoCRM to v5.4.5.
 
   * Added missing dependency "php-mbstring" - closes #1186.
 
