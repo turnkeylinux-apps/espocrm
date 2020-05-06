@@ -19,7 +19,7 @@ chown -R www-data:www-data $WEBROOT
 
 
 # php.ini
-CONF=/etc/php/7.0/apache2/php.ini
+CONF=/etc/php/7.3/apache2/php.ini
 sed -i "s|^memory_limit.*|memory_limit = 256M|" $CONF
 sed -i "s|^upload_max_filesize.*|upload_max_filesize = 50M|" $CONF
 sed -i "s|^post_max_size.*|post_max_size = 50M|" $CONF
@@ -53,17 +53,15 @@ $CURL $URL --data "user-lang=en_US&action=step1"
 $CURL $URL --data "license-agree=1&action=step2"
 $CURL ${URL}index.php --data "hostName=localhost&dbName=$DB_NAME&dbUserName=$DB_USER&dbUserPass=$DB_PASS&action=settingsTest"
 $CURL $URL --data "host-name=localhost&db-name=$DB_NAME&db-user-name=$DB_USER&db-user-password=$DB_PASS&action=setupConfirmation"
-$CURL "http://127.0.0.1/api/v1/Metadata"
-$CURL ${URL}index.php --data "action=checkPermission"
-$CURL ${URL}index.php --data "action=applySett"
+$CURL ${URL}index.php --data "action=saveSettings"
 $CURL ${URL}index.php --data "action=buildDatabase"
 $CURL $URL --data "action=step3"
 $CURL ${URL}index.php --data "name=$ADMIN_NAME&pass=$ADMIN_PASS&confPass=$ADMIN_PASS&user-name=$ADMIN_NAME&user-pass=$ADMIN_PASS&action=createUser"
 $CURL $URL --data "user-name=$ADMIN_NAME&user-pass=$ADMIN_PASS&user-confirm-pass=$ADMIN_PASS&action=step4"
-$CURL ${URL}index.php --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&weekStart=0&defaultCurrency=USD&thousandSeparator=%2C&decimalMark=.&language=en_US&action=setPreferences"
+$CURL ${URL}index.php --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&weekStart=0&defaultCurrency=USD&thousandSeparator=%2C&decimalMark=.&language=en_US&action=savePreferences"
 $CURL ${URL} --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&weekStart=0&defaultCurrency=USD&thousandSeparator=%2C&decimalMark=.&language=en_US&action=step5"
-$CURL ${URL}index.php --data "smtpServer=&smtpPort=25&smtpAuth=false&smtpSecurity=&smtpUsername=&smtpPassword=&outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=false&action=setEmailSett"
-$CURL ${URL} --data "outboundEmailFromName=&outboundEmailFromAddress=&smtpServer=&smtpPort=25&smtpSecurity=&smtpUsername=&smtpPassword=&action=finish"
+$CURL ${URL}index.php --data "smtpServer=&smtpPort=25&smtpAuth=false&smtpSecurity=TLS&smtpUsername=&smtpPassword=&outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=false&action=saveEmailSettings"
+$CURL ${URL} --data "outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=on&smtpServer=&smtpPort=25&smtpSecurity=TLS&smtpUsername=&smtpPassword=&action=finish"
 rm -f /tmp/cookie
 
 # stop services

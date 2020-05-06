@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set EspoCRM admin password
 
 Option:
@@ -14,20 +14,19 @@ import re
 
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
-from executil import system
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -51,10 +50,10 @@ def main():
         match = re.search("'passwordSalt' => '([^']*)',", line)
         if match != None:
             normSalt = ('$6$%s$' % match.group(1))
-            hashed = crypt.crypt(hashlib.md5(password).hexdigest(), normSalt).replace(normSalt, '')
+            hashed = crypt.crypt(hashlib.md5(password.encode('utf8')).hexdigest(), normSalt).replace(normSalt, '')
 
             m = MySQL()
-            m.execute('UPDATE espocrm.user SET password = \"%s\" WHERE user_name = \"admin\"' % hashed)
+            m.execute('UPDATE espocrm.user SET password=%s WHERE user_name=\"admin\"', (hashed))
             break
 
 
