@@ -30,6 +30,8 @@ sed -i "s|^max_execution_time.*|max_execution_time = 180|" $CONF
 a2dissite 000-default
 a2ensite espocrm
 a2enmod rewrite
+a2enmod proxy
+a2enmod proxy_wstunnel
 
 # start services
 service mysql start
@@ -68,6 +70,8 @@ rm -f /tmp/cookie
 service apache2 stop
 service mysql stop
 
+# enable websocket
+systemctl enable espocrm-websocket.service
 
 # setup cron
 CRON_TAB=/var/spool/cron/crontabs/root
