@@ -1,0 +1,16 @@
+[Unit]
+Description=EspoCRM WebSocket Service
+Requires=mysql.service
+After=mysql.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=www-data
+ExecStart=/usr/bin/php /var/www/espocrm/websocket.php
+StandardError=/var/www/espocrm/data/logs/websocket.log
+
+[Install]
+WantedBy=default.target

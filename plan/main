@@ -8,6 +8,7 @@ php-imap
 php-mbstring
 php-zip
 php-xml
+php-zmq
 
 unzip
 uuid-runtime
