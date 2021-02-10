@@ -4,6 +4,7 @@ turnkey-espocrm-16.1 (1) turnkey; urgency=low
 
   * Added dependencies and configuration required for websocket functionality.
     (Note this is not enabled by default, it can be in the admin settings)
+    Closes issue #1363
 
   * Note: Please refer to turnkey-core's 16.1 changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
