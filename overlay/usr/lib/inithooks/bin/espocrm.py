@@ -56,8 +56,8 @@ def main():
             d = Dialog('TurnKey Linux - First boot configuration')
 
         domain = d.get_input(
-            "Gitea Domain",
-            "Enter the domain to serve Gitea.",
+            "EspoCRM Domain",
+            "Enter the domain to serve EspoCRM.",
             DEFAULT_DOMAIN)
 
     if domain == "DEFAULT":
