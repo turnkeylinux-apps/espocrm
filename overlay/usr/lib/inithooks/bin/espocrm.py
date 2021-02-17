@@ -29,7 +29,7 @@ DEFAULT_DOMAIN='www.example.com'
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'pass='])
+                                       ['help', 'pass=', 'domain='])
     except getopt.GetoptError as e:
         usage(e)
 
@@ -77,11 +77,13 @@ def main():
 
                 m = MySQL()
                 m.execute('UPDATE espocrm.user SET password=%s WHERE user_name=\"admin\"', (hashed))
-                break
             if 'siteUrl' in line:
-                line = re.sub("=> '([^']*)'", f"=> '{domain}'", line)
+                line = re.sub("=> '([^']*)'", f"=> 'https://{domain}'", line)
+
             lines.append(line)
+
+    with open(conf, 'w') as fob:
+        fob.writelines(lines)
 
 if __name__ == "__main__":
     main()
-
