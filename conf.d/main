@@ -71,6 +71,7 @@ service apache2 stop
 service mysql stop
 
 # enable websocket
+sed -i "\|useWebSocket|s|>.*|> true,|" $WEBROOT/data/config.php
 systemctl enable espocrm-websocket.service
 
 # setup cron
