@@ -18,6 +18,8 @@ and on top of that:
       they **ARE NOT** configured to install automatically. See `EspoCRM
       documentation`_ for upgrading.
 
+    - Websocket_ preconfigured and enabled.
+
 - SSL support out of the box.
 - `Adminer`_ administration frontend for MySQL (listening on port
   12322 - uses SSL).
@@ -36,5 +38,6 @@ Credentials *(passwords set at first boot)*
 .. _EspoCRM: https://www.espocrm.com/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _EspoCRM documentation: https://www.espocrm.com/documentation/administration/upgrading/
+.. _Websocket: https://docs.espocrm.com/administration/websocket/
 .. _Adminer: https://www.adminer.org
 
