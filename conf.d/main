@@ -19,7 +19,7 @@ chown -R www-data:www-data $WEBROOT
 
 
 # php.ini
-CONF=/etc/php/7.3/apache2/php.ini
+CONF=/etc/php/7.4/apache2/php.ini
 sed -i "s|^memory_limit.*|memory_limit = 256M|" $CONF
 sed -i "s|^upload_max_filesize.*|upload_max_filesize = 50M|" $CONF
 sed -i "s|^post_max_size.*|post_max_size = 50M|" $CONF
@@ -28,6 +28,7 @@ sed -i "s|^max_execution_time.*|max_execution_time = 180|" $CONF
 
 # configure apache
 a2dissite 000-default
+a2enmod headers
 a2ensite espocrm
 a2enmod rewrite
 a2enmod proxy
@@ -64,6 +65,8 @@ $CURL ${URL}index.php --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZ
 $CURL ${URL} --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&weekStart=0&defaultCurrency=USD&thousandSeparator=%2C&decimalMark=.&language=en_US&action=step5"
 $CURL ${URL}index.php --data "smtpServer=&smtpPort=25&smtpAuth=false&smtpSecurity=TLS&smtpUsername=&smtpPassword=&outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=false&action=saveEmailSettings"
 $CURL ${URL} --data "outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=on&smtpServer=&smtpPort=25&smtpSecurity=TLS&smtpUsername=&smtpPassword=&action=finish"
+
+
 rm -f /tmp/cookie
 
 # stop services
