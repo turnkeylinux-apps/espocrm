@@ -12,9 +12,9 @@ import getopt
 import hashlib
 import crypt
 import re
-import inithooks_cache
+from libinithooks import inithooks_cache
 
-from dialog_wrapper import Dialog
+from libinithooks.dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
 def usage(s=None):
@@ -65,7 +65,7 @@ def main():
 
     inithooks_cache.write('APP_DOMAIN', domain)
 
-    conf = "/var/www/espocrm/data/config.php"
+    conf = "/var/www/espocrm/data/config-internal.php"
 
     lines = []
     with open(conf, 'r') as fob:
