@@ -1,11 +1,11 @@
-turnkey-espocrm-16.1 (1) turnkey; urgency=low
+turnkey-espocrm-17.0 (1) turnkey; urgency=low
 
-  * Updated EspoCRM to v7.0.9.
+  * Updated EspoCRM to v7.2.2.
 
   * Note: Please refer to turnkey-core's 17.0 changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
 
- -- Zhenya Hvorostian <zhenya@turnkeylinux.org>  Mon, 14 Feb 2022 01:13:40 +0300
+ -- Zhenya Hvorostian <zhenya@turnkeylinux.org>  Mon, 14 Sep 2022 01:13:40 +0300
 
 turnkey-espocrm-16.1 (1) turnkey; urgency=low
 

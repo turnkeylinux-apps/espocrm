@@ -5,8 +5,7 @@ dl() {
     cd $2; curl -L -f -O $PROXY $1; cd -
 }
 
-VERSION="7.0.9"
-URL="http://www.espocrm.com/downloads/EspoCRM-$VERSION.zip"
+VERSION="7.2.2"
+URL="https://www.espocrm.com/downloads/EspoCRM-$VERSION.zip"
 
 dl $URL /usr/local/src
-
