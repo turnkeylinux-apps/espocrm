@@ -17,7 +17,6 @@ rm $SRC/EspoCRM-*.zip
 mv $SRC/EspoCRM-* $WEBROOT
 chown -R www-data:www-data $WEBROOT
 
-
 # php.ini
 CONF=/etc/php/7.4/apache2/php.ini
 sed -i "s|^memory_limit.*|memory_limit = 256M|" $CONF
@@ -39,14 +38,12 @@ service mysql start
 service apache2 start
 
  
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
+MYSQL_BATCH="mysql --batch"
 
-$MYSQL_ADMIN create $DB_NAME
+mysqladmin create $DB_NAME
 
 $MYSQL_BATCH --execute "CREATE USER 'espocrm'@'localhost' IDENTIFIED BY '$DB_PASS';"
 $MYSQL_BATCH --execute "GRANT ALL PRIVILEGES ON * . * TO 'espocrm'@'localhost';"
-
 
 # curl
 URL="http://127.0.0.1/install/"
@@ -66,7 +63,6 @@ $CURL ${URL} --data "dateFormat=MM%2FDD%2FYYYY&timeFormat=HH%3Amm&timeZone=UTC&w
 $CURL ${URL}index.php --data "smtpServer=&smtpPort=25&smtpAuth=false&smtpSecurity=TLS&smtpUsername=&smtpPassword=&outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=false&action=saveEmailSettings"
 $CURL ${URL} --data "outboundEmailFromName=&outboundEmailFromAddress=&outboundEmailIsShared=on&smtpServer=&smtpPort=25&smtpSecurity=TLS&smtpUsername=&smtpPassword=&action=finish"
 
-
 rm -f /tmp/cookie
 
 # stop services
@@ -76,7 +72,3 @@ service mysql stop
 # enable websocket
 sed -i "\|useWebSocket|s|>.*|> true,|" $WEBROOT/data/config.php
 systemctl enable espocrm-websocket.service
-
-# setup cron
-CRON_TAB=/var/spool/cron/crontabs/root
-echo '* * * * * php -f /var/www/espocrm/cron.php > /dev/null 2>&1' >> $CRON_TAB
