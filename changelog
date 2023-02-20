@@ -1,3 +1,14 @@
+turnkey-espocrm-17.2 (1) turnkey; urgency=low
+
+  * Updated EspoCRM to v7.3.3.
+
+  * Rebuild with PHP 8.1 - closes #1803.
+
+  * Refactor conf script to remove duplicate cron job (and other tidying)
+    - closes #1678.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 20 Feb 2023 05:34:53 +0000
+
 turnkey-espocrm-17.1 (1) turnkey; urgency=low
 
   * Updated all Debian packages to latest.
