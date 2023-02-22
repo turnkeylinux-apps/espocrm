@@ -1,16 +1,15 @@
 #include <turnkey/base>
-#include <turnkey/lamp>
+#include <turnkey/lamp81>
 
-php-gd
-php-cli
-php-curl
-php-imap
-php-mbstring
-php-zip
-php-xml
-php-zmq
+php8.1-gd
+php8.1-cli
+php8.1-curl
+php8.1-imap
+php8.1-mbstring
+php8.1-zip
+php8.1-xml
+php8.1-zmq
 
 unzip
 uuid-runtime
 memcached
-
