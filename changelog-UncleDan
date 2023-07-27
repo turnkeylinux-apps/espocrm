@@ -1,0 +1,8 @@
+turnkey-espocrm-17.2 (1) turnkey; urgency=low
+
+  * Updated EspoCRM to v7.5.5.
+
+  * Rebuild with PHP 8.2.
+
+ -- Daniele Lolli (UncleDan) <uncledan74@gmail.com>  Tue, 27 Jul 2023 11:00:00 +0200
+
