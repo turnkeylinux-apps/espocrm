@@ -1,6 +1,3 @@
-PHP_EXTRA_PINS=libpcre2-8-0 libgd3
-PHP_VERSION=8.2
-
 COMMON_CONF = apache-credit
 
 CREDIT_ANCHORTEXT = EspoCRM Appliance
