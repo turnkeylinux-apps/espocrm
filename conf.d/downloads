@@ -1,11 +1,16 @@
-#!/bin/bash -ex
+#!/bin/bash
+set -euo pipefail
 
-dl() {
-    [ "$FAB_HTTP_PROXY" ] && PROXY="--proxy $FAB_HTTP_PROXY"
-    cd $2; curl -L -f -O $PROXY $1; cd -
-}
+readonly VERSION=10.0.6
+readonly ARCHIVE="EspoCRM-${VERSION}.zip"
+readonly URL="https://github.com/espocrm/espocrm/releases/download/${VERSION}/${ARCHIVE}"
+readonly SHA256=88bcb177dbe38b79ec3c13d491d78b727dc14fe18fc91deea1bfa72b313f7fb4
 
-VERSION=$(gh_releases espocrm/espocrm | grep -vi 'beta' | sort -V | tail -1)
-URL="https://github.com/espocrm/espocrm/releases/download/$VERSION/EspoCRM-$VERSION.zip"
+proxy_args=()
+if [[ -n ${FAB_HTTP_PROXY:-} ]]; then
+    proxy_args=(--proxy "$FAB_HTTP_PROXY")
+fi
 
-dl $URL /usr/local/src
+curl --fail --location --show-error "${proxy_args[@]}" \
+    --output "/usr/local/src/${ARCHIVE}" "$URL"
+printf '%s  %s\n' "$SHA256" "/usr/local/src/${ARCHIVE}" | sha256sum --check --strict

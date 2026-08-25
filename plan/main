@@ -9,6 +9,8 @@ php-mbstring
 php-zip
 php-xml
 php-zmq
+php-bcmath
+php-exif
 
 unzip
 uuid-runtime

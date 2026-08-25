@@ -16,7 +16,9 @@ and on top of that:
 
       **Security note**: Updates to EspoCRM may require supervision so
       they **ARE NOT** configured to install automatically. See `EspoCRM
-      documentation`_ for upgrading.
+      documentation`_ for upgrading. The supported command-line updater is
+      ``sudo -u www-data php /var/www/espocrm/command.php upgrade``. Back up
+      the appliance before applying an upgrade.
 
     - Websocket_ preconfigured and enabled.
 
@@ -40,4 +42,3 @@ Credentials *(passwords set at first boot)*
 .. _EspoCRM documentation: https://www.espocrm.com/documentation/administration/upgrading/
 .. _Websocket: https://docs.espocrm.com/administration/websocket/
 .. _Adminer: https://www.adminer.org
-
