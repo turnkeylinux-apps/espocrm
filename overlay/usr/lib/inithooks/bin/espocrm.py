@@ -9,7 +9,6 @@ Option:
 
 import sys
 import getopt
-import re
 import subprocess
 from libinithooks import inithooks_cache
 
@@ -64,18 +63,21 @@ def main():
 
     inithooks_cache.write('APP_DOMAIN', domain)
 
-    conf = "/var/www/espocrm/data/config-internal.php"
-
-    lines = []
-    with open(conf, 'r') as fob:
-        for line in fob:
-            if 'siteUrl' in line:
-                line = re.sub("=> '([^']*)'", f"=> 'https://{domain}'", line)
-
-            lines.append(line)
-
-    with open(conf, 'w') as fob:
-        fob.writelines(lines)
+    subprocess.run(
+        [
+            'runuser',
+            '-u',
+            'www-data',
+            '--',
+            'php',
+            'command.php',
+            'config:set',
+            'siteUrl',
+            f'https://{domain}',
+        ],
+        cwd='/var/www/espocrm',
+        check=True,
+    )
 
     hashed = subprocess.run(
         [

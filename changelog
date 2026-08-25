@@ -6,6 +6,9 @@ turnkey-espocrm-19.0 (1) turnkey; urgency=low
   * Update the appliance for Debian 13/Trixie, PHP 8.4 and EspoCRM's current
     bcrypt password format.
 
+  * Set the firstboot site URL through EspoCRM's supported configuration
+    command.
+
   * Restrict the EspoCRM database account to the EspoCRM database.
 
   * Upgrade the base distribution to Debian 13/Trixie.

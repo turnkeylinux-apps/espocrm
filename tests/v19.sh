@@ -35,8 +35,9 @@ grep -q 'EspoCRM' "$home_file" || {
     echo 'EspoCRM application page is missing' >&2
     exit 1
 }
-grep -q "'siteUrl' => 'https://localhost'" \
-    /var/www/espocrm/data/config-internal.php || {
+site_url=$(runuser -u www-data -- sh -c \
+    'cd /var/www/espocrm && php command.php config:get siteUrl')
+test "$site_url" = 'https://localhost' || {
     echo 'EspoCRM site URL does not match firstboot input' >&2
     exit 1
 }
