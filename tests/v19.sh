@@ -8,12 +8,14 @@ db_password=${TKL_TEST_DB_PASS:?TKL_TEST_DB_PASS is required}
 base=https://www.example.com
 api=$base/api/v1
 auth_file=/tmp/tkl-espocrm-auth.$$
+home_file=/tmp/tkl-espocrm-home.$$
 lead_file=/tmp/tkl-espocrm-lead.$$
 release_file=/tmp/tkl-espocrm-release.$$
 latest_file=/tmp/tkl-espocrm-latest.$$
 
 cleanup() {
-    rm -f -- "$auth_file" "$lead_file" "$release_file" "$latest_file"
+    rm -f -- "$auth_file" "$home_file" "$lead_file" "$release_file" \
+        "$latest_file"
 }
 trap cleanup EXIT
 
@@ -28,7 +30,8 @@ for module in bcmath curl exif gd iconv json mbstring openssl pdo_mysql \
     php -m | grep -Fxiq "$module"
 done
 
-curl "${curl_common[@]}" "$base/" | grep -q 'EspoCRM'
+curl "${curl_common[@]}" "$base/" >"$home_file"
+grep -q 'EspoCRM' "$home_file"
 grep -q "'siteUrl' => 'https://www.example.com'" \
     /var/www/espocrm/data/config-internal.php
 
@@ -42,7 +45,7 @@ import sys
 
 data = json.load(open(sys.argv[1], encoding='utf-8'))
 assert data['user']['userName'] == 'admin'
-assert data['user']['isAdmin'] is True
+assert data['user']['type'] == 'admin'
 print(data['token'])
 PY
 )
