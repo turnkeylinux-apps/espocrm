@@ -22,18 +22,24 @@ trap cleanup EXIT
 resolve=(--resolve localhost:443:127.0.0.1)
 curl_common=(--insecure --fail --silent --show-error "${resolve[@]}")
 
-systemctl --quiet is-active apache2.service mariadb.service \
-    espocrm-websocket.service multi-user.target
-apache2ctl -M 2>/dev/null | grep -q 'ssl_module'
-for module in bcmath curl exif gd iconv json mbstring openssl pdo_mysql \
-        xml xmlwriter zip zmq; do
-    php -m | grep -Fxiq "$module"
+for unit in apache2.service mariadb.service espocrm-websocket.service \
+        multi-user.target; do
+    systemctl --quiet is-active "$unit" || {
+        echo "$unit is not active" >&2
+        exit 1
+    }
 done
 
 curl "${curl_common[@]}" "$base/" >"$home_file"
-grep -q 'EspoCRM' "$home_file"
+grep -q 'EspoCRM' "$home_file" || {
+    echo 'EspoCRM application page is missing' >&2
+    exit 1
+}
 grep -q "'siteUrl' => 'https://localhost'" \
-    /var/www/espocrm/data/config-internal.php
+    /var/www/espocrm/data/config-internal.php || {
+    echo 'EspoCRM site URL does not match firstboot input' >&2
+    exit 1
+}
 
 credentials=$(printf 'admin:%s' "$app_password" | base64 -w0)
 curl "${curl_common[@]}" \
