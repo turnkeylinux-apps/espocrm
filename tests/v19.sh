@@ -5,7 +5,7 @@ umask 077
 result=${TKL_TEST_RESULT:?TKL_TEST_RESULT is required}
 app_password=${TKL_TEST_APP_PASS:?TKL_TEST_APP_PASS is required}
 db_password=${TKL_TEST_DB_PASS:?TKL_TEST_DB_PASS is required}
-base=https://www.example.com
+base=https://localhost
 api=$base/api/v1
 auth_file=/tmp/tkl-espocrm-auth.$$
 home_file=/tmp/tkl-espocrm-home.$$
@@ -19,7 +19,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-resolve=(--resolve www.example.com:443:127.0.0.1)
+resolve=(--resolve localhost:443:127.0.0.1)
 curl_common=(--insecure --fail --silent --show-error "${resolve[@]}")
 
 systemctl --quiet is-active apache2.service mariadb.service \
@@ -32,7 +32,7 @@ done
 
 curl "${curl_common[@]}" "$base/" >"$home_file"
 grep -q 'EspoCRM' "$home_file"
-grep -q "'siteUrl' => 'https://www.example.com'" \
+grep -q "'siteUrl' => 'https://localhost'" \
     /var/www/espocrm/data/config-internal.php
 
 credentials=$(printf 'admin:%s' "$app_password" | base64 -w0)
