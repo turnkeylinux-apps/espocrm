@@ -4,7 +4,6 @@
 php-gd
 php-cli
 php-curl
-php-imap
 php-mbstring
 php-zip
 php-xml
