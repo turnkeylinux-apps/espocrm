@@ -1,3 +1,20 @@
+turnkey-espocrm-19.0 (1) turnkey; urgency=low
+
+  * Install EspoCRM 10.0.6 from the official upstream release archive and
+    verify its published SHA-256 digest during the build.
+
+  * Update the appliance for Debian 13/Trixie, PHP 8.4 and EspoCRM's current
+    bcrypt password format.
+
+  * Set the firstboot site URL through EspoCRM's supported configuration
+    command.
+
+  * Restrict the EspoCRM database account to the EspoCRM database.
+
+  * Upgrade the base distribution to Debian 13/Trixie.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 25 Aug 2026 00:00:00 +0000
+
 turnkey-espocrm-18.0 (1) turnkey; urgency=low
 
   * Install latest upstream version of EspoCRM: v8.0.6.

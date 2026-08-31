@@ -9,9 +9,7 @@ Option:
 
 import sys
 import getopt
-import hashlib
-import crypt
-import re
+import subprocess
 from libinithooks import inithooks_cache
 
 from libinithooks.dialog_wrapper import Dialog
@@ -65,25 +63,39 @@ def main():
 
     inithooks_cache.write('APP_DOMAIN', domain)
 
-    conf = "/var/www/espocrm/data/config-internal.php"
+    subprocess.run(
+        [
+            'runuser',
+            '-u',
+            'www-data',
+            '--',
+            'php',
+            'command.php',
+            'config:set',
+            'siteUrl',
+            f'https://{domain}',
+        ],
+        cwd='/var/www/espocrm',
+        check=True,
+    )
 
-    lines = []
-    with open(conf, 'r') as fob:
-        for line in fob:
-            match = re.search("'passwordSalt' => '([^']*)',", line)
-            if match != None:
-                normSalt = ('$6$%s$' % match.group(1))
-                hashed = crypt.crypt(hashlib.md5(password.encode('utf8')).hexdigest(), normSalt).replace(normSalt, '')
+    hashed = subprocess.run(
+        [
+            'php',
+            '-r',
+            'echo password_hash(stream_get_contents(STDIN), PASSWORD_BCRYPT);',
+        ],
+        input=password,
+        text=True,
+        check=True,
+        capture_output=True,
+    ).stdout
 
-                m = MySQL()
-                m.execute('UPDATE espocrm.user SET password=%s WHERE user_name=\"admin\"', (hashed))
-            if 'siteUrl' in line:
-                line = re.sub("=> '([^']*)'", f"=> 'https://{domain}'", line)
-
-            lines.append(line)
-
-    with open(conf, 'w') as fob:
-        fob.writelines(lines)
+    m = MySQL()
+    m.execute(
+        'UPDATE espocrm.user SET password=%s WHERE user_name="admin"',
+        (hashed,),
+    )
 
 if __name__ == "__main__":
     main()

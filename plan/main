@@ -4,11 +4,12 @@
 php-gd
 php-cli
 php-curl
-php-imap
 php-mbstring
 php-zip
 php-xml
 php-zmq
+php-bcmath
+php-exif
 
 unzip
 uuid-runtime
